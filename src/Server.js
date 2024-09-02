@@ -8,7 +8,7 @@ app.use(express.json());
 
 mongoose
     .connect(
-    "mongodb+srv://NEOSAMAH:TKlpmYpyOFILVEO0@caster.3ayoo.mongodb.net/Subscription_Manager"
+    "insert link"
     )
     .then(() => {
     console.log("Connected to MongoDB!");
