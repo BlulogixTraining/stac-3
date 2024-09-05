@@ -2,13 +2,14 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
+require("dotenv").config();
 
 app.use(cors());
 app.use(express.json());
 
 mongoose
     .connect(
-    "insert link"
+        process.env.MONGO_URI
     )
     .then(() => {
     console.log("Connected to MongoDB!");
