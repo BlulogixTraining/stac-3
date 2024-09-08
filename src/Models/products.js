@@ -1,19 +1,59 @@
 const mongoose = require('mongoose');
-// Product Schema
-const ProductSchema = new mongoose.Schema({
-    productId: {
+
+
+const productSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  description: {
+    type: String,
+    trim: true,
+  },
+  price: {
+    type: Number,
+    required: true,
+    min: 0,
+  },
+  category: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  stock: {
+    type: Number,
+    default: 0,
+    min: 0,
+  },
+  
+  images: [
+    {
+      url: {
         type: String,
         required: true,
-        unique: true
-    },
-    name: {
+      },
+      alt: {
         type: String,
-        required: true
+        default: '',
+      },
     },
-    price: {
-        type: mongoose.Types.Decimal128, // Using Decimal128 for high-precision decimal values
-        required: true
-    }
+  ],
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  updatedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
-const ProductsModel = mongoose.model("products", ProductSchema);
-module.exports = ProductsModel;
+
+
+productSchema.pre('save', function (next) {
+  this.updatedAt = Date.now();
+  next();
+});
+
+
+module.exports = mongoose.model('Product', productSchema);
