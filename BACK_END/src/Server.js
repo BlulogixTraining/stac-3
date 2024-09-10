@@ -4,6 +4,9 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const UserRoute = require("./routes/user.route.js");
 const UserModel = require("./Models/users.model.js");
+const connectDB = require("./config/db.js")
+const port = 3001;
+
 
 require("dotenv").config();
 
@@ -15,15 +18,13 @@ app.use(express.urlencoded({ extended: false }));
 //routes
 app.use("/api/users", UserRoute);
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
-    console.log("Connected to MongoDB!");
-  })
-  .catch((error) => {
-    console.error("MongoDB connection error:", error);
-  });
 
-app.listen(3001, () => {
-  console.log("Server is running on port 3001");
-});
+
+try {
+  connectDB();
+  app.listen(port, () => {
+    console.log(`App started on port ${port}`);
+  });
+} catch (error) {
+  console.log(error);
+}
