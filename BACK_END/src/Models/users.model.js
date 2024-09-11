@@ -71,6 +71,13 @@ const UserSchema = new mongoose.Schema({
   subscriptions: [
     { type: mongoose.Schema.Types.ObjectId, ref: "Subscription" },
   ],
+
+  role: {
+    type: String,
+    enum: ["Admin", "User", "Moderator"], // Add roles as needed
+    default: "User",
+}
+
 });
 
 const UsersModel = mongoose.model("Users", UserSchema);
