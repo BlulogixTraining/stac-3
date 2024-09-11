@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const UserRoute = require("./routes/user.route.js");
+const RuleRoute = require("./routes/rule.route");
 const SubscriptionRoute = require('./routes/subscription.route'); 
 const resourceRoutes = require("./routes/resource.route.js");
 const connectDB = require("./config/db.js")
@@ -18,6 +19,9 @@ app.use(express.urlencoded({ extended: false }));
 
 //routes
 app.use("/api", UserRoute);
+app.use("/api", RuleRoute);
+
+
 app.use("/api", SubscriptionRoute); 
 app.use("/api", resourceRoutes);
 
