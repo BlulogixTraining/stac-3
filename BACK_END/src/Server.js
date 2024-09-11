@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const mongoose = require("mongoose");
 const UserRoute = require("./routes/user.route.js");
+const RuleRoute = require("./routes/rule.route");
 const connectDB = require("./config/db.js")
 const port = 3001;
 
@@ -16,6 +17,7 @@ app.use(express.urlencoded({ extended: false }));
 
 //routes
 app.use("/api", UserRoute);
+app.use("/api", RuleRoute);
 
 
 
