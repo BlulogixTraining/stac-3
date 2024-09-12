@@ -1,0 +1,231 @@
+openapi: 3.0.0
+info:
+  title: User Management API
+  description: STAJ
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:3001
+    description: Local Server
+
+paths:
+  /SignUp:
+    post:
+      tags:
+        - User
+      summary: Sign up a new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId:
+                  type: string
+                fullName:
+                  type: string
+                email:
+                  type: string
+                password:
+                  type: string
+                phoneNumber:
+                  type: string
+              required:
+                - userId
+                - fullName
+                - email
+                - password
+                - phoneNumber
+      responses:
+        '201':
+          description: User registered successfully
+        '400':
+          description: error
+
+  /SignIn:
+    post:
+      tags:
+        - User
+      summary: Sign in a user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: User signed in successfully
+        '401':
+          description: error
+
+  /users:
+    get:
+      tags:
+        - User
+      summary: get users
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Done
+        '403':
+          description: error
+
+  /users/{id}:
+    get:
+      tags:
+        - User
+      summary: get a user by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Done
+        '404':
+          description: User not found
+
+  /addUser:
+    post:
+      tags:
+        - User
+      summary: Create a new user
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: User created successfully
+        '403':
+          description: error
+
+  /updateUser/{id}:
+    put:
+      tags:
+        - User
+      summary: Update a user by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '200':
+          description: User updated successfully
+        '404':
+          description: User not found
+
+  /deleteUser/{id}:
+    delete:
+      tags:
+        - User
+      summary: Delete a user by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User deleted successfully
+        '404':
+          description: User not found
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+        fullName:
+          type: string
+        email:
+          type: string
+        password:
+          type: string
+        phoneNumber:
+          type: string
+        address:
+          type: object
+          properties:
+            line1:
+              type: string
+            city:
+              type: string
+            state:
+              type: string
+            postalCode:
+              type: string
+            country:
+              type: string
+        role:
+          type: string
+          enum:
+            - Admin
+            - User
+            - Moderator
+        emailVerified:
+          type: boolean
+        phoneVerified:
+          type: boolean
+        dateOfBirth:
+          type: string
+          format: date
+        profilePictureURL:
+          type: string
+        outstandingBalance:
+          type: number
+        isSubscribed:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        deletedAt:
+          type: string
+          format: date-time
+        subscriptions:
+          type: array
+          items:
+            type: string
+      required:
+        - userId
+        - fullName
+        - email
+        - password
+        - phoneNumber
