@@ -15,10 +15,10 @@ const { isAdmin, isUser } = require('../middleware/authorize');
 router.post("/SignUp", SignUp);
 router.post("/SignIn", SignIn);
 
-router.get('/users', isAdmin, getUsers); // Only Admins can access this route
-router.get('/users/:id', isAdmin, getUser); // Only Admins can access this route
-router.post('/addUser', isAdmin, createUser); // Only Admins can access this route
-router.put('/updateUser/:id', isAdmin, updateUser); // Only Admins can access this route
-router.delete('/deleteUser/:id', isAdmin, deleteUser); // Only Admins can access this route
+router.get('/users',isAdmin ,getUsers);
+router.get('/users/:id', isAdmin, getUser); 
+router.post('/addUser',isAdmin ,createUser); 
+router.put('/updateUser/:id', isAdmin, updateUser); 
+router.delete('/deleteUser/:id', isAdmin, deleteUser); 
 
 module.exports = router;

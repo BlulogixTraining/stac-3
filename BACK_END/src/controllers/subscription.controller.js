@@ -3,9 +3,9 @@ const UsersModel = require('../Models/users.model'); // Adjust path as needed
 
 // Create a subscription
 const createSubscription = async (req, res) => {
-  const { user_id, plan_id, start_date, end_date, payment_method, price, currency } = req.body;
+  const { subscriptionId, user_id, start_date, end_date, payment_method, price, currency } = req.body;
 
-  if (!user_id || !plan_id || !start_date || !end_date || !payment_method || !price || !currency) {
+  if (!user_id || !start_date || !end_date || !payment_method || !price || !currency) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
@@ -16,9 +16,8 @@ const createSubscription = async (req, res) => {
     }
 
     const newSubscription = new SubscriptionsModel({
-      subscriptionId: new mongoose.Types.ObjectId(), // Generate unique ID
+      subscriptionId: subscriptionId, // Generate unique ID
       user_id,
-      plan_id,
       start_date,
       end_date,
       status: true, // Active subscription
