@@ -11,11 +11,6 @@ const SubscriptionSchema = new mongoose.Schema({
     ref: 'Users', // Reference to Users collection
     required: true
   },
-  plan_id: { // Reference to the Plan document (if you have a Plan schema)
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Plan', // Reference to Plan collection (adjust if you have different schema name)
-    required: true
-  },
   start_date: {
     type: Date, // Use Date type for date fields
     required: true
