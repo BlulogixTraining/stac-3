@@ -15,7 +15,7 @@ const port = 3001;
 
 
 require("dotenv").config();
-app.use("/api-docs",swaggerUi.serve, swaggerUi.setup(swaggerDoc));
+app.use("/swagger",swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
 
 //middleware
