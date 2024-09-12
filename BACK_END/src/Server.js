@@ -4,8 +4,11 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const UserRoute = require("./routes/user.route.js");
 const RuleRoute = require("./routes/rule.route");
+<<<<<<< S3-17+Debug
 const SubscriptionRoute = require('./routes/subscription.route'); 
 const resourceRoutes = require("./routes/resource.route.js");
+=======
+>>>>>>> dev
 const connectDB = require("./config/db.js")
 const port = 3001;
 
