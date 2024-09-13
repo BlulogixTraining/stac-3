@@ -2,25 +2,30 @@ const mongoose = require('mongoose');
 
 const SubscriptionSchema = new mongoose.Schema({
   subscriptionId: {
-    type: mongoose.Schema.Types.ObjectId, // Use ObjectId for unique identifier
+    type: String, 
     required: true,
     unique: true
   },
-  user_id: { // Reference to the User document
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Users', // Reference to Users collection
+  user_id: { 
+    type: String,
+    ref: 'Users', 
     required: true
   },
+  products: [{ 
+    type: String,
+    ref: 'Products' 
+  }],
   start_date: {
-    type: Date, // Use Date type for date fields
+    type: Date, 
     required: true
   },
   end_date: {
     type: Date,
-    required: true
+    default: null 
   },
   status: {
-    type: Boolean,
+    type: String, 
+    enum: ['active', 'inactive'], 
     required: true
   },
   payment_method: {

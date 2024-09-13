@@ -8,7 +8,8 @@ const YAML = require("yamljs");
 const swaggerDoc = YAML.load("./swagger.yaml");
 const UserRoute = require("./routes/user.route.js");
 const RuleRoute = require("./routes/rule.route");
-const SubscriptionRoute = require('./routes/subscription.route'); 
+const productRoutes = require('./routes/products.route.js');
+const subscriptionRoutes = require('./routes/subscription.route.js');
 const resourceRoutes = require("./routes/resource.route.js");
 const connectDB = require("./config/db.js")
 const port = 3001;
@@ -24,11 +25,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
 //routes
-app.use("/", UserRoute);
+app.use("/users", UserRoute);
 app.use("/", RuleRoute);
+app.use('/subscriptions', subscriptionRoutes);
+app.use('/products', productRoutes);
 
-
-app.use("/", SubscriptionRoute); 
 app.use("/", resourceRoutes);
 
 try {
