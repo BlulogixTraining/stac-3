@@ -6,14 +6,10 @@ const SubscriptionSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  user_id: { 
-    type: String,
-    ref: 'Users', 
-    required: true
-  },
+  
   products: [{ 
     type: String,
-    ref: 'Products' 
+    ref: 'products' 
   }],
   start_date: {
     type: Date, 

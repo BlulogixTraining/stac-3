@@ -9,7 +9,11 @@ const UserSubscriptionSchema = new mongoose.Schema({
         type: String,
         required: true,
         ref: "subscriptions"
-    }
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+      },
 });
 const UserSubscriptionsModel = mongoose.model("user_subscriptions", UserSubscriptionSchema);
 module.exports = UserSubscriptionsModel;
