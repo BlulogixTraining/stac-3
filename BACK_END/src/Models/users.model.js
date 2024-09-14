@@ -31,11 +31,7 @@ const UserSchema = new mongoose.Schema({
     postalCode: String,
     country: String,
   },
-  role: {
-    type: String,
-    enum: ["Admin", "User"],
-    default: "User",
-  },
+  
   emailVerified: {
     type: Boolean,
     default: false,

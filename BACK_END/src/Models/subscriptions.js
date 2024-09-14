@@ -20,8 +20,9 @@ const SubscriptionSchema = new mongoose.Schema({
     required: true
   },
   status: {
-    type: Boolean,
-    required: true
+    type: String,
+    enum: ['active', 'inactive', 'canceled'],
+    required: true,
   },
   payment_method: {
     type: String,
