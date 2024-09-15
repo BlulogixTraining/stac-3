@@ -15,8 +15,8 @@ const { isAdmin, isUser } = require('../middleware/authorize');
 router.post("/SignUp", SignUp);
 router.post("/SignIn", SignIn);
 
-router.get('/users',isAdmin,getUsers);
-router.get('/users/:id', getUser); 
+router.get('/getUsers',isAdmin,getUsers);
+router.get('/getUser/:id', getUser); 
 router.post('/addUser',createUser); 
 router.put('/updateUser/:id', updateUser); 
 router.delete('/deleteUser/:id', deleteUser); 

@@ -28,11 +28,10 @@ app.use(express.urlencoded({ extended: false }));
 
 //routes
 app.use("/users", UserRoute);
-app.use("/", RuleRoute);
+app.use("/rules", RuleRoute);
 app.use('/subscriptions', subscriptionRoutes);
 app.use('/products', productRoutes);
-
-app.use("/", resourceRoutes);
+app.use("/resources", resourceRoutes);
 app.use('/api', userSubscriptionsRoutes);
 
 try {

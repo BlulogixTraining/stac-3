@@ -12,10 +12,10 @@ const {
   } = require("../controllers/rule.controller");
 
 
-router.get("/rules",getRules);
+router.get("/getRules",getRules);
 
 
-router.get("/rules/:ruleId",getRule);
+router.get("/getRule/:ruleId",getRule);
 
 
 router.post("/createRule",createRule);
