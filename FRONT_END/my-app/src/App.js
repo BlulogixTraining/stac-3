@@ -1,25 +1,27 @@
-import logo from './logo.svg';
+// src/App.js
+import React from 'react';
+import Table from './Table';
 import './App.css';
 
-function App() {
+const App = () => {
+  const columns = [
+    { header: 'Ad', accessor: 'name' },
+    { header: 'Yaş', accessor: 'age' },
+    { header: 'E-posta', accessor: 'email' }
+  ];
+
+  const data = [
+    { name: 'John Doe', age: 28, email: 'john@example.com' },
+    { name: 'Jane Smith', age: 34, email: 'jane@example.com' },
+    { name: 'Sam Johnson', age: 22, email: 'sam@example.com' }
+  ];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>dynamic Table</h1>
+      <Table data={data} columns={columns} />
     </div>
   );
-}
+};
 
 export default App;

@@ -1,23 +1,23 @@
-
+// src/Table.js
 import React from 'react';
-import './Table.css'; // CSS dosyasını import ediyoruz
+import './Table.css';
 
-const Table = ({ columns, data }) => {
+const Table = ({ data, columns }) => {
   return (
     <div className="table-container">
-      <table className="table">
+      <table>
         <thead>
           <tr>
-            {columns.map((column, index) => (
-              <th key={index}>{column}</th>
+            {columns.map((col, index) => (
+              <th key={index}>{col.header}</th>
             ))}
           </tr>
         </thead>
         <tbody>
           {data.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              {columns.map((column, colIndex) => (
-                <td key={colIndex}>{row[column]}</td>
+              {columns.map((col, colIndex) => (
+                <td key={colIndex}>{row[col.accessor]}</td>
               ))}
             </tr>
           ))}
