@@ -14,38 +14,26 @@ const SignUp = async (req, res) => {
   try {
     let { email, password, userId } = req.body;
 
-    // Check if email and password are provided
     if (!email || !password) {
       return res.status(400).json({ message: 'Email and password are required.' });
     }
 
-    // Check if the email already exists
     const existingUser = await UserModel.findOne({ email });
     if (existingUser) {
       return res.status(400).json({ message: 'User already exists.' });
     }
 
-    // Automatically generate a unique userId if it's not provided
+    
     if (!userId) {
-      userId = uuidv4();  // Generate unique userId using UUID
+      userId = uuidv4(); 
     }
 
-    // Check if the userId already exists
-    const existingUserId = await UserModel.findOne({ userId });
-    if (existingUserId) {
-      return res.status(400).json({ message: 'User ID already exists.' });
-    }
-
-    // Hash the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create new user object
     const newUser = new UserModel({ ...req.body, userId, password: hashedPassword });
 
-    // Save the new user to the database
     await newUser.save();
 
-    // Generate JWT token
     const token = createToken(newUser.userId);
 
     res.status(201).json({
@@ -55,10 +43,10 @@ const SignUp = async (req, res) => {
 
   } catch (err) {
     if (err.code === 11000) {
-      // Handle duplicate key error
+    
       return res.status(400).json({ message: `Duplicate key error: ${JSON.stringify(err.keyValue)}` });
     }
-    // Handle other errors
+  
     res.status(500).json({ message: err.message });
   }
 };
