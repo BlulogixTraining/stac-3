@@ -2,6 +2,7 @@ const express = require("express");
 const Rule = require("../Models/rules");
 const User = require("../Models/users.model");
 const router = express.Router();
+const { isAdmin, isUser } = require('../middleware/authorize');
 
 const {
     getRules,
@@ -12,19 +13,19 @@ const {
   } = require("../controllers/rule.controller");
 
 
-router.get("/rules",getRules);
+router.get("/rules",isAdmin,getRules);
 
 
-router.get("/rules/:ruleId",getRule);
+router.get("/rules/:ruleId",isAdmin,getRule);
 
 
-router.post("/createRule",createRule);
+router.post("/createRule",isAdmin,createRule);
 
 
-router.put("/updateRule/:ruleId",updateRule);
+router.put("/updateRule/:ruleId",isAdmin,updateRule);
 
 
-router.delete("/deleteRule/:ruleId",deleteRule);
+router.delete("/deleteRule/:ruleId",isAdmin,deleteRule);
 
 
   module.exports = router;

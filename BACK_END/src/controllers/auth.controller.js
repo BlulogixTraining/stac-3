@@ -2,8 +2,7 @@ const UserModel = require("../Models/users.model");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require('dotenv').config();
-
-
+const mongoose = require('mongoose');
 
 
 
@@ -29,7 +28,7 @@ const createToken = (userId) => {
         return res.status(400).json({ message: 'User already exists.' });
       }
         const hashedPassword = await bcrypt.hash(password, 10);
-      const newUser = new UserModel({ ...req.body, password: hashedPassword });
+      const newUser = new UserModel({ ...req.body, password: hashedPassword});
   
       await newUser.save();
   
