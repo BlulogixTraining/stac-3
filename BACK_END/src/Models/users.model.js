@@ -1,12 +1,11 @@
 const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema({
-  userId: {
+  user_id: {
     type: String,
     required: true,
     unique: true,
   },
-
   fullName: {
     type: String,
     required: true,
@@ -31,7 +30,11 @@ const UserSchema = new mongoose.Schema({
     postalCode: String,
     country: String,
   },
-  
+  role: {
+    type: String,
+    enum: ["Admin", "User", "Moderator"], // Include roles as needed
+    default: "User",
+  },
   emailVerified: {
     type: Boolean,
     default: false,
@@ -41,19 +44,15 @@ const UserSchema = new mongoose.Schema({
     default: false,
   },
   dateOfBirth: Date,
-
   profilePictureURL: String,
-
   outstandingBalance: {
     type: Number,
     default: 0.0,
   },
-
   isSubscribed: {
     type: Boolean,
     default: false,
   },
-
   createdAt: {
     type: Date,
     default: Date.now,
@@ -63,17 +62,9 @@ const UserSchema = new mongoose.Schema({
     default: Date.now,
   },
   deletedAt: Date,
-
   subscriptions: [
-    { type: mongoose.Schema.Types.ObjectId, ref: "Subscription" },
+    { type: String, ref: "Subscriptions" } // Updated to use String IDs
   ],
-
-  role: {
-    type: String,
-    enum: ["Admin", "User", "Moderator"], // Add roles as needed
-    default: "User",
-}
-
 });
 
 const UsersModel = mongoose.model("Users", UserSchema);

@@ -1,18 +1,23 @@
 const express = require('express');
 const router = express.Router();
-const {
-  createSubscription,
-  viewSubscriptions,
-  unsubscribe,
-} = require('../controllers/subscription.controller'); // Adjust path as needed
+const subscriptionController = require('../controllers/subscription.controller');
 
-// Create a new subscription
-router.post('/subscribe', createSubscription);
+// Route to create a new subscription
+router.post('/createsub', subscriptionController.createSubscription);
 
-// View all subscriptions for a user
-router.get('/subscriptions/:user_id', viewSubscriptions);
+// Route to get a subscription by ID
+router.get('/:id', subscriptionController.getSubscriptionById);
 
-// Unsubscribe (delete a subscription)
-router.delete('/unsubscribe/:subscriptionId', unsubscribe);
+// Route to remove a product from a subscription
+router.delete('/remove-product/:subscriptionId/:productId', subscriptionController.removeProductFromSubscription);
+
+// Route to end a subscription (set status to inactive)
+router.patch('/end/:subscriptionId', subscriptionController.endSubscription);
+
+// Route to delete a subscription (optional)
+router.delete('/:id', subscriptionController.deleteSubscription);
+
+// Route to get all subscriptions for a user
+router.get('/user/:userId', subscriptionController.getAllSubscriptionsForUser);
 
 module.exports = router;
