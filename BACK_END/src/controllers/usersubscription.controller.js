@@ -59,7 +59,33 @@ const unlinkUserFromSubscription = async (req, res) => {
   }
 };
 
+// Function to get count and IDs of users subscribed to a specific subscription
+async function getUsersCountAndIdsBySubscription(req, res) {
+  const { subscriptionId } = req.params; // Assuming you're passing the subscription ID in the URL
+
+  try {
+    const userSubscriptions = await UserSubscriptionsModel.find({ subscriptionId });
+
+    // Extract user IDs
+    const userIds = userSubscriptions.map(us => us.userId);
+
+    // Get the count of users
+    const userCount = userIds.length;
+
+    return res.status(200).json({
+      userCount,
+      userIds,
+    });
+  } catch (error) {
+    console.error('Error fetching users:', error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+
+
 module.exports = {
+  getUsersCountAndIdsBySubscription,
   linkUserToSubscription,
   getAllSubscriptionsForUser,
   unlinkUserFromSubscription,
