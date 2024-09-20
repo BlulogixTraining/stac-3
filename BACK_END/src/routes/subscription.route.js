@@ -8,21 +8,21 @@ const {
   endSubscription,
   deleteSubscription,
 } = require('../controllers/subscription.controller');
-
+const { isAdmin, isUser } = require('../middleware/authorize');
 // Create a new subscription
-router.post('/subscriptions', createSubscription);
+router.post('/createsubscription',isAdmin, createSubscription); // POST /createsubscription
 
 // Get a subscription by ID
-router.get('/subscriptions/:id', getSubscriptionById);
+router.get('/getsubscription/:id',isAdmin, getSubscriptionById); // GET /getsubscription/:id
 
 // Remove a product from a subscription
-router.delete('/subscriptions/:subscriptionId/products/:productId', removeProductFromSubscription);
+router.delete('/removesubscriptionproduct/:subscriptionId/products/:productId',isAdmin, removeProductFromSubscription); // DELETE /removesubscriptionproduct/:subscriptionId/products/:productId
 
 // End a subscription
-router.patch('/subscriptions/:subscriptionId/end', endSubscription);
+router.patch('/endsubscription/:subscriptionId',isAdmin, endSubscription); // PATCH /endsubscription/:subscriptionId
 
 // Delete a subscription
-router.delete('/subscriptions/:id', deleteSubscription);
+router.delete('/deletesubscription/:id',isAdmin, deleteSubscription); // DELETE /deletesubscription/:id
 
 module.exports = router;
 

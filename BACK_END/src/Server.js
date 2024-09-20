@@ -32,7 +32,7 @@ app.use("/rules", RuleRoute);
 app.use('/subscriptions', subscriptionRoutes);
 app.use('/products', productRoutes);
 app.use("/resources", resourceRoutes);
-app.use('/api', userSubscriptionsRoutes);
+app.use('/user-subscriptions', userSubscriptionsRoutes);
 
 try {
   connectDB();

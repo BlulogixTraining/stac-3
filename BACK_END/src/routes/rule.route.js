@@ -11,20 +11,21 @@ const {
     deleteRule,
   } = require("../controllers/rule.controller");
 
+  const { isAdmin, isUser } = require('../middleware/authorize');
 
-router.get("/getRules",getRules);
-
-
-router.get("/getRule/:ruleId",getRule);
+router.get("/getRules",isAdmin,getRules);
 
 
-router.post("/createRule",createRule);
+router.get("/getRule/:ruleId",isAdmin,getRule);
 
 
-router.put("/updateRule/:ruleId",updateRule);
+router.post("/createRule",isAdmin,createRule);
 
 
-router.delete("/deleteRule/:ruleId",deleteRule);
+router.put("/updateRule/:ruleId",isAdmin,updateRule);
+
+
+router.delete("/deleteRule/:ruleId",isAdmin,deleteRule);
 
 
   module.exports = router;
