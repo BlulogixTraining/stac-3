@@ -5,15 +5,20 @@ const {
   linkUserToSubscription,
   getAllSubscriptionsForUser,
   unlinkUserFromSubscription,
+  getUsersCountAndIdsBySubscription,
 } = require('../controllers/usersubscription.controller');
 
-// Link a user to a subscription
-router.post('/user-subscriptions', linkUserToSubscription);
+const { isAdmin, isUser } = require('../middleware/authorize');
+// Subscribe a user to a subscription
+router.post('/subscribe', linkUserToSubscription); // POST /subscribe
 
 // Get all subscriptions for a user
-router.get('/user-subscriptions/:userId', getAllSubscriptionsForUser);
+router.get('/users/:userId/subscriptions', getAllSubscriptionsForUser); // GET /users/:userId/subscriptions
 
-// Unlink a user from a subscription
-router.delete('/user-subscriptions/:userId/:subscriptionId', unlinkUserFromSubscription);
+// Unsubscribe a user from a subscription
+router.delete('/unsubscribe/:userId/:subscriptionId', unlinkUserFromSubscription); // DELETE /unsubscribe/:userId/:subscriptionId
+
+// Get user count and IDs by subscription
+router.get('/subscriptions/:subscriptionId/users', getUsersCountAndIdsBySubscription); // GET /subscriptions/:subscriptionId/users
 
 module.exports = router;

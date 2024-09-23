@@ -12,12 +12,12 @@ const {
     deleteRule,
   } = require("../controllers/rule.controller");
 
+  const { isAdmin, isUser } = require('../middleware/authorize');
 
-router.get("/rules",isAdmin,getRules);
-router.get("/getRules",getRules);
+router.get("/getRules",isAdmin,getRules);
 
 
-router.get("/getRule/:ruleId",getRule);
+router.get("/getRule/:ruleId",isAdmin,getRule);
 
 
 router.post("/createRule",isAdmin,createRule);
