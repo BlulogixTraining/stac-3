@@ -7,20 +7,21 @@ const {
   updateResource,
   deleteResource
 } = require('../controllers/resource.controller');
+const { isAdmin } = require('../middleware/authorize');
 
 // Create a new resource
-router.post('/resources', createResource);
+router.post('/createResources',isAdmin, createResource);
 
 // Get all resources
-router.get('/resources', getAllResources);
+router.get('/getResources',isAdmin, getAllResources);
 
 // Get a resource by ID
-router.get('/resources/:id', getResourceById);
+router.get('/getResource/:id',isAdmin, getResourceById);
 
 // Update a resource
-router.put('/resources/:id', updateResource);
+router.put('/updateResources/:id',isAdmin, updateResource);
 
 // Delete a resource
-router.delete('/resources/:id', deleteResource);
+router.delete('/deleteResources/:id',isAdmin, deleteResource);
 
 module.exports = router;

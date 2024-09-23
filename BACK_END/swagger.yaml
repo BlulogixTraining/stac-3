@@ -163,6 +163,110 @@ paths:
         '404':
           description: User not found
 
+  /addResources:
+    post:
+      tags:
+        - Resource
+      summary: Create a new resource
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Resource'
+      responses:
+        '201':
+          description: Resource created successfully
+        '400':
+          description: Missing required fields
+        '500':
+          description: Error creating resource
+
+  /getResources:
+    get:
+      tags:
+        - Resource
+      summary: Get all resources
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successfully retrieved all resources
+        '500':
+          description: Error fetching resources
+
+  /getResource/{id}:
+    get:
+      tags:
+        - Resource
+      summary: Get a resource by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successfully retrieved resource
+        '404':
+          description: Resource not found
+        '500':
+          description: Error fetching resource
+
+  /updateResources/{id}:
+    put:
+      tags:
+        - Resource
+      summary: Update a resource by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Resource'
+      responses:
+        '200':
+          description: Resource updated successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Error updating resource
+
+  /deleteResources/{id}:
+    delete:
+      tags:
+        - Resource
+      summary: Delete a resource by ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Resource deleted successfully
+        '404':
+          description: Resource not found
+        '500':
+          description: Error deleting resource
+
+
 components:
   schemas:
     User:
@@ -229,3 +333,51 @@ components:
         - email
         - password
         - phoneNumber
+
+    Resource:
+      type: object
+      properties:
+        resource_name:
+          type: string
+          example: "Home Page"
+        resource_type:
+          type: string
+          enum:
+            - Page
+            - API
+            - Component
+          example: "Page"
+        resource_path:
+          type: string
+          example: "/home"
+        action:
+          type: string
+          enum:
+            - view
+            - edit
+            - delete
+            - create
+          example: "view"
+        description:
+          type: string
+          example: "Main homepage resource"
+        created_at:
+          type: string
+          format: date-time
+          example: "2023-09-18T14:12:00Z"
+        updated_at:
+          type: string
+          format: date-time
+          example: "2023-09-18T15:00:00Z"
+      required:
+        - resource_name
+        - resource_type
+        - resource_path
+        - action
+        - description
+
+securitySchemes:
+  bearerAuth:
+    type: http
+    scheme: bearer
+    bearerFormat: JWT

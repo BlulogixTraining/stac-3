@@ -2,6 +2,7 @@ const express = require("express");
 const Rule = require("../Models/rules");
 const User = require("../Models/users.model");
 const router = express.Router();
+const { isAdmin, isUser } = require('../middleware/authorize');
 
 const {
     getRules,
