@@ -1,36 +1,48 @@
 const mongoose = require('mongoose');
 
-const ResourceSchema = new mongoose.Schema({
-  resourceId: {
+// Define the Resources schema
+const resourceSchema = new mongoose.Schema({
+  resource_name: {
     type: String,
     required: true,
-    unique: true,
+    trim: true,
   },
-  name: {
+  resource_type: {
     type: String,
     required: true,
+    enum: ['Page', 'API', 'Component'], // Example types
   },
-  type: {
+  resource_path: {
     type: String,
-    enum: ['Document', 'Image', 'Video', 'Other'],
     required: true,
+    trim: true,
   },
-  url: {
+  action: {
     type: String,
-    required: true,
+    required:true,
+    enum: ['view', 'edit', 'delete', 'create'], // Actions allowed on the resource
   },
   description: {
     type: String,
+    required:true,
+    trim: true,
   },
-  createdAt: {
+  created_at: {
     type: Date,
     default: Date.now,
   },
-  updatedAt: {
+  updated_at: {
     type: Date,
     default: Date.now,
   },
 });
 
-const Resource = mongoose.model('Resource', ResourceSchema);
+// Middleware to update `updated_at` before save
+resourceSchema.pre('save', function (next) {
+  this.updated_at = Date.now();
+  next();
+});
+
+const Resource = mongoose.model('Resource', resourceSchema);
+
 module.exports = Resource;

@@ -2,19 +2,19 @@ const Resource = require('../Models/resources');
 
 // Create a new resource
 const createResource = async (req, res) => {
-  const { resourceId, name, type, url, description } = req.body;
+  const { resource_name, resource_type, resource_path, description , action } = req.body;
 
-  if (!resourceId || !name || !type || !url) {
+  if (!resource_name || !resource_type || !resource_path || !action ) {
     return res.status(400).json({ message: 'Missing required fields' });
   }
 
   try {
     const newResource = new Resource({
-      resourceId,
-      name,
-      type,
-      url,
+      resource_name,
+      resource_type,
+      resource_path,
       description,
+      action,
     });
 
     await newResource.save();
@@ -80,3 +80,4 @@ module.exports = {
   updateResource,
   deleteResource,
 };
+

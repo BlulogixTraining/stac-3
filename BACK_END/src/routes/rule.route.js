@@ -14,9 +14,10 @@ const {
 
 
 router.get("/rules",isAdmin,getRules);
+router.get("/getRules",getRules);
 
 
-router.get("/rules/:ruleId",isAdmin,getRule);
+router.get("/getRule/:ruleId",getRule);
 
 
 router.post("/createRule",isAdmin,createRule);

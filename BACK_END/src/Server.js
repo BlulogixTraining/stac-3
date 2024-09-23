@@ -11,6 +11,8 @@ const RuleRoute = require("./routes/rule.route");
 const productRoutes = require('./routes/products.route.js');
 const subscriptionRoutes = require('./routes/subscription.route.js');
 const resourceRoutes = require("./routes/resource.route.js");
+const userSubscriptionsRoutes = require('./routes/usersubscription.route');
+
 const connectDB = require("./config/db.js")
 const port = 3001;
 
@@ -26,11 +28,11 @@ app.use(express.urlencoded({ extended: false }));
 
 //routes
 app.use("/users", UserRoute);
-app.use("/", RuleRoute);
+app.use("/rules", RuleRoute);
 app.use('/subscriptions', subscriptionRoutes);
 app.use('/products', productRoutes);
-
-app.use("/", resourceRoutes);
+app.use("/resources", resourceRoutes);
+app.use('/api', userSubscriptionsRoutes);
 
 try {
   connectDB();
