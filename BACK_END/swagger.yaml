@@ -370,6 +370,7 @@ components:
           format: date-time
           example: "2023-09-18T15:00:00Z"
       required:
+        - resourceId
         - resource_name
         - resource_type
         - resource_path

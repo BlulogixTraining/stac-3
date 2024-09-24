@@ -2,6 +2,12 @@ const mongoose = require('mongoose');
 
 // Define the Resources schema
 const resourceSchema = new mongoose.Schema({
+  resourceId: {
+    type: String, 
+    required: true,
+    unique: true
+  },
+
   resource_name: {
     type: String,
     required: true,
@@ -18,7 +24,7 @@ const resourceSchema = new mongoose.Schema({
     trim: true,
   },
   action: {
-    type: String,
+    type: [String],
     required:true,
     enum: ['view', 'edit', 'delete', 'create'], // Actions allowed on the resource
   },
