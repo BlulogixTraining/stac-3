@@ -12,7 +12,6 @@ const {
     deleteRule,
   } = require("../controllers/rule.controller");
 
-  const { isAdmin, isUser } = require('../middleware/authorize');
 
 router.get("/getRules",isAdmin,getRules);
 

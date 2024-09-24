@@ -10,7 +10,7 @@ const {
 const { isAdmin } = require('../middleware/authorize');
 
 // Create a new resource
-router.post('/createResources',isAdmin, createResource);
+router.post('/addResources',isAdmin, createResource);
 
 // Get all resources
 router.get('/getResources',isAdmin, getAllResources);
