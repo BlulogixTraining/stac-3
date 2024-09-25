@@ -14,18 +14,11 @@ const {
 
 
 router.get("/getRules",isAdmin,getRules);
-
-
 router.get("/getRule/:ruleId",isAdmin,getRule);
-
-
 router.post("/createRule",isAdmin,createRule);
-
-
 router.put("/updateRule/:ruleId",isAdmin,updateRule);
-
-
 router.delete("/deleteRule/:ruleId",isAdmin,deleteRule);
 
 
-  module.exports = router;
+
+module.exports = router;
