@@ -12,6 +12,7 @@ const productRoutes = require('./routes/products.route.js');
 const subscriptionRoutes = require('./routes/subscription.route.js');
 const resourceRoutes = require("./routes/resource.route.js");
 const userSubscriptionsRoutes = require('./routes/usersubscription.route');
+const paymentMethodRoutes = require('./routes/payment.route.js');
 
 const connectDB = require("./config/db.js")
 const port = 3001;
@@ -33,6 +34,7 @@ app.use('/subscriptions', subscriptionRoutes);
 app.use('/products', productRoutes);
 app.use("/resources", resourceRoutes);
 app.use('/user-subscriptions', userSubscriptionsRoutes);
+app.use("/payment", paymentMethodRoutes);
 
 try {
   connectDB();
@@ -42,4 +44,3 @@ try {
 } catch (error) {
   console.log(error);
 }
-
