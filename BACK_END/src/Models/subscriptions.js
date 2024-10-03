@@ -8,7 +8,7 @@ const SubscriptionSchema = new mongoose.Schema({
   },
   
   products: [{ 
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'products' 
   }],
   start_date: {

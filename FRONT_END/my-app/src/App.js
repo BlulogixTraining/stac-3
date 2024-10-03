@@ -1,27 +1,32 @@
-
-import React from 'react';
-import Table from './Table';
-import './App.css';
+import React, { useState } from 'react';
+import PaymentForm from './components/PaymentForm';
 
 const App = () => {
-  const columns = [
-    { header: 'Ad', accessor: 'name' },
-    { header: 'Yaş', accessor: 'age' },
-    { header: 'E-posta', accessor: 'email' }
-  ];
+  const [userId] = useState('603c9b5c67e4d20394f01b68'); // Replace this with the actual user ID
+  const [paymentInfo, setPaymentInfo] = useState(null);
 
-  const data = [
-    { name: 'John Doe', age: 28, email: 'john@example.com' },
-    { name: 'Jane Smith', age: 34, email: 'jane@example.com' },
-    { name: 'Sam Johnson', age: 22, email: 'sam@example.com' }
-  ];
+  const handlePaymentSuccess = (customer, paymentMethod) => {
+    console.log('Payment Success:', customer, paymentMethod);
+    setPaymentInfo({ customer, paymentMethod });
+  };
 
   return (
     <div>
-      <h1>dynamic Table</h1>
-      <Table data={data} columns={columns} />
+      <h1>Stripe Payment Integration</h1>
+      {!paymentInfo ? (
+        <PaymentForm userId={userId} onPaymentSuccess={handlePaymentSuccess} />
+      ) : (
+        <div>
+          <h2>Payment Successful!</h2>
+          <p>Customer ID: {paymentInfo.customer.id}</p>
+          <p>Payment Method ID: {paymentInfo.paymentMethod.id}</p>
+        </div>
+      )}
     </div>
   );
 };
 
 export default App;
+
+
+

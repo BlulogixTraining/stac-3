@@ -52,6 +52,14 @@ const UserSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  stripe_customer_id: {
+    type: String,
+    default : null, // This will store the Stripe customer ID
+  },
+  stripe_payment_method_id: {
+    type: String,
+    default:null , // This will store the default Stripe payment method ID
+  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -61,9 +69,10 @@ const UserSchema = new mongoose.Schema({
     default: Date.now,
   },
   deletedAt: Date,
-  subscriptions: [
-    { type: String, ref: "Subscriptions" } // Updated to use String IDs
-  ],
+  subscriptions: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Subscription'  // Reference to your Subscription model
+  }],
 });
 
 const UsersModel = mongoose.model("Users", UserSchema);
