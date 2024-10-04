@@ -6,6 +6,8 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerJsdoc = require('swagger-jsdoc');
 const YAML = require("yamljs");
 const swaggerDoc = YAML.load("./swagger.yaml");
+const cron = require('node-cron');
+
 const UserRoute = require("./routes/user.route.js");
 const RuleRoute = require("./routes/rule.route");
 const productRoutes = require('./routes/products.route.js');
@@ -15,7 +17,8 @@ const userSubscriptionsRoutes = require('./routes/usersubscription.route');
 const paymentRoutes = require('./routes/paymentMethod.route.js');
 const paymentprocessRoutes = require('./routes/paymentprocess.js');
 const invoiceRoutes = require('./routes/invoice.route.js');
-
+const { scheduleRenewalJob } = require('./jobs/renewaljob'); // Import the cron job
+const { sendSubscriptionReminders } = require('./services/reminderservices');
 
 const connectDB = require("./config/db.js")
 const port = 3001;
@@ -24,7 +27,14 @@ const port = 3001;
 require("dotenv").config();
 app.use("/swagger",swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
+// jobs
+scheduleRenewalJob();
 
+// Schedule the reminder function to run every day at 9 AM
+cron.schedule('0 9 * * *', () => {
+  console.log('Sending subscription reminders...');
+  sendSubscriptionReminders();
+});
 //middleware
 app.use(cors());
 app.use(express.json());

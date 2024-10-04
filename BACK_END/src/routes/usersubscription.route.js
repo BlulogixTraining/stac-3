@@ -2,10 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 const {
+  getUsersCountAndIdsBySubscription,
   linkUserToSubscription,
   getAllSubscriptionsForUser,
   unlinkUserFromSubscription,
-  getUsersCountAndIdsBySubscription,
+  handleRenewals,
 } = require('../controllers/usersubscription.controller');
 
 const { isAdmin, isUser } = require('../middleware/authorize');
@@ -21,4 +22,6 @@ router.delete('/unsubscribe/:userId/:subscriptionId', unlinkUserFromSubscription
 // Get user count and IDs by subscription
 router.get('/subscriptions/:subscriptionId/users', getUsersCountAndIdsBySubscription); // GET /subscriptions/:subscriptionId/users
 
+// Optionally, add a route to handle renewals if you want to call it manually
+router.post('/handle-renewals', handleRenewals);
 module.exports = router;
