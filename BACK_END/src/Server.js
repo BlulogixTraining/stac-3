@@ -37,7 +37,7 @@ app.use('/subscriptions', subscriptionRoutes);
 app.use('/products', productRoutes);
 app.use("/resources", resourceRoutes);
 app.use('/user-subscriptions', userSubscriptionsRoutes);
-app.use('/payments', paymentRoutes);
+app.use('/payment-methods', paymentRoutes);
 app.use('/payments', paymentprocessRoutes);
 app.use('/invoices', invoiceRoutes);
 

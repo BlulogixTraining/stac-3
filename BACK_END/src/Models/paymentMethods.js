@@ -12,11 +12,7 @@ const paymentMethodSchema = new mongoose.Schema({
     required: true,
     enum: ['Credit Card', 'PayPal', 'Bank Transfer'],  // Allowed payment methods
   },
-  stripe_payment_method_id: {  // Store the Stripe payment method ID (for Credit Card, PayPal, Bank Transfer)
-    type: String,
-    required: true,
-  },
-
+ 
   is_default: {
     type: Boolean,
     default: false,  // Indicates if this is the default payment method

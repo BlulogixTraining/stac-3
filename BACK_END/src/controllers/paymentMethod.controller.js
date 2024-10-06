@@ -49,8 +49,16 @@ const createPaymentMethod = async (req, res) => {
     });
 
     // Step 6: Save the payment method ID to the user's record in the database
-    user.stripe_payment_method_id = paymentMethod.id;
-    await user.save();
+    if (!user.paymentMethods) user.paymentMethods = [];
+      user.paymentMethods.push({
+      paymentMethodId: paymentMethod.id,
+      brand: paymentMethod.card.brand,
+      last4: paymentMethod.card.last4,
+      exp_month: paymentMethod.card.exp_month,
+      exp_year: paymentMethod.card.exp_year,
+  });
+  
+  await user.save();
 
     // Step 7: Return success response
     res.status(200).json({ success: true, customer, paymentMethod });
@@ -60,6 +68,90 @@ const createPaymentMethod = async (req, res) => {
   }
 };
 
+
+
+const getAllPaymentMethods = async (req, res) => {
+  const { userId } = req.params;
+
+  try {
+      const user = await UserModel.findById(userId);
+      if (!user) {
+          return res.status(404).json({ success: false, error: "User not found" });
+      }
+
+      const paymentMethods = user.paymentMethods;  // Now contains saved methods
+
+      res.status(200).json({ success: true, paymentMethods });
+  } catch (error) {
+      res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+
+// Get a specific payment method
+const getPaymentMethod = async (req, res) => {
+  const { userId, paymentMethodId } = req.params;
+
+  try {
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, error: "User not found" });
+    }
+
+    const paymentMethod = await stripe.paymentMethods.retrieve(paymentMethodId);
+    if (!paymentMethod) {
+      return res.status(404).json({ success: false, error: "Payment method not found" });
+    }
+
+    res.status(200).json({ success: true, paymentMethod });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+// Update a specific payment method
+const updatePaymentMethod = async (req, res) => {
+  const { userId, paymentMethodId } = req.params;
+  const { payment_method_data } = req.body; // Assuming you send updated payment method data
+
+  try {
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, error: "User not found" });
+    }
+
+    const updatedPaymentMethod = await stripe.paymentMethods.update(paymentMethodId, {
+      billing_details: payment_method_data.billing_details, // Update accordingly
+    });
+
+    res.status(200).json({ success: true, updatedPaymentMethod });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
+// Delete a specific payment method
+const deletePaymentMethod = async (req, res) => {
+  const { userId, paymentMethodId } = req.params;
+
+  try {
+    const user = await UserModel.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, error: "User not found" });
+    }
+
+    await stripe.paymentMethods.detach(paymentMethodId);
+    
+    res.status(200).json({ success: true, message: "Payment method deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+};
+
 module.exports = {
-  createPaymentMethod
+  createPaymentMethod,
+  getAllPaymentMethods,
+  getPaymentMethod,
+  updatePaymentMethod,
+  deletePaymentMethod,
 };

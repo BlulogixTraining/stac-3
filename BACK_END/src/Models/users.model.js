@@ -60,6 +60,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     default:null , // This will store the default Stripe payment method ID
   },
+  paymentMethods: [{
+    paymentMethodId: String,
+    brand: String,
+    last4: String,
+    exp_month: Number,
+    exp_year: Number,
+    // any other fields you need
+}],
   createdAt: {
     type: Date,
     default: Date.now,
